@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+	<item android:id="@+id/newSearchMenu" android:title="@string/new_search" />
+	<item android:id="@+id/releaseTypeMenu" android:title="@string/release_type"> 
+		<menu>
+			<group android:id="@+id/prereleaseMenuGroup" android:checkableBehavior="single">
+				<item android:id="@+id/stableOnlyMenu" android:title="@string/stable_only" android:checked="true" /> 
+				<item android:id="@+id/includePrereleaseMenu" android:title="@string/include_prerelease" /> 
+			</group>
+		</menu>
+	</item>
+	<item android:id="@+id/sortByParentMenu" android:title="@string/sort_by"> 
+		<menu>
+			<group android:id="@+id/sortByMenuGroup" android:checkableBehavior="single">
+				<item android:id="@+id/sortByPopularityMenu" android:title="@string/sort_by_popularity" android:checked="true" /> 
+				<item android:id="@+id/sortByTitleMenu" android:title="@string/sort_by_title" /> 
+				<item android:id="@+id/sortByDateAddedMenu" android:title="@string/sort_by_date_added" /> 
+			</group>
+		</menu>
+	</item>
+</menu>

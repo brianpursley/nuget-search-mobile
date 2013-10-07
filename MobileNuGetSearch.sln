@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NuGetSearch.Android", "src\NuGetSearch.Android\NuGetSearch.Android.csproj", "{83B85408-4AA8-4D0A-A8FA-69E57A4E5B4C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NuGetSearch.Common.Android", "src\NuGetSearch.Common.Android\NuGetSearch.Common.Android.csproj", "{2714F20B-9EE4-402C-B851-F0F5045E6FF2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4569E68D-0EEE-476F-AE56-3460959E2C01}"
+	ProjectSection(SolutionItems) = preProject
+		LICENSE = LICENSE
+		NOTICE = NOTICE
+		src\Settings.StyleCop = src\Settings.StyleCop
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+		Default|Any CPU = Default|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2714F20B-9EE4-402C-B851-F0F5045E6FF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2714F20B-9EE4-402C-B851-F0F5045E6FF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2714F20B-9EE4-402C-B851-F0F5045E6FF2}.Default|Any CPU.ActiveCfg = Debug|Any CPU
+		{2714F20B-9EE4-402C-B851-F0F5045E6FF2}.Default|Any CPU.Build.0 = Debug|Any CPU
+		{2714F20B-9EE4-402C-B851-F0F5045E6FF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2714F20B-9EE4-402C-B851-F0F5045E6FF2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{83B85408-4AA8-4D0A-A8FA-69E57A4E5B4C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{83B85408-4AA8-4D0A-A8FA-69E57A4E5B4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{83B85408-4AA8-4D0A-A8FA-69E57A4E5B4C}.Default|Any CPU.ActiveCfg = Debug|Any CPU
+		{83B85408-4AA8-4D0A-A8FA-69E57A4E5B4C}.Default|Any CPU.Build.0 = Debug|Any CPU
+		{83B85408-4AA8-4D0A-A8FA-69E57A4E5B4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{83B85408-4AA8-4D0A-A8FA-69E57A4E5B4C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = src\NuGetSearch.Android\NuGetSearch.Android.csproj
+	EndGlobalSection
+EndGlobal

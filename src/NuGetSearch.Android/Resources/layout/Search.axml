@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:background="#0071BC"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/relativeLayout1">
+        <EditText
+            android:layout_width="fill_parent"
+            android:background="#FFFFFF"
+            android:layout_height="40dp"
+            android:id="@+id/searchTerm"
+            android:layout_toLeftOf="@+id/searchButton"
+            android:layout_alignParentLeft="true"
+            android:hint="Search Packages..."
+            android:paddingRight="5dp"
+            android:paddingLeft="5dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:singleLine="true"
+            android:inputType="text"
+            android:imeOptions="actionSearch" />
+        <ImageButton
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:id="@+id/searchButton"
+            android:layout_alignParentRight="true"
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true"
+            android:src="@drawable/search"
+            android:background="#dddddd" />
+    </RelativeLayout>
+    <TextView
+        android:id="@+id/noNetwork"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:textColor="#fff2f50d"
+        android:text="@string/no_network"
+        android:gravity="center_horizontal"
+        android:paddingTop="20dp"
+        android:textStyle="bold"
+        android:visibility="gone" />
+    <LinearLayout
+        android:id="@+id/statsLayout"
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:visibility="invisible">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/uniquePackages"
+            android:textColor="#EEEEEE"
+            android:layout_gravity="center"
+            android:textSize="30dp"
+            android:paddingTop="20dp"
+            android:textStyle="bold" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/uniquePackagesCaption"
+            android:text="@string/unique_packages"
+            android:textColor="#CCCCCC"
+            android:layout_gravity="center"
+            android:textSize="20dp"
+            android:singleLine="true" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/totalPackageDownloads"
+            android:textColor="#EEEEEE"
+            android:layout_gravity="center"
+            android:textSize="30dp"
+            android:paddingTop="20dp"
+            android:textStyle="bold" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/totalPackageDownloadsCaption"
+            android:text="@string/total_package_downloads"
+            android:textColor="#CCCCCC"
+            android:layout_gravity="center"
+            android:textSize="20dp"
+            android:singleLine="true" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/totalPackages"
+            android:textColor="#EEEEEE"
+            android:layout_gravity="center"
+            android:textSize="30dp"
+            android:paddingTop="20dp"
+            android:textStyle="bold" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/totalPackagesCaption"
+            android:text="@string/total_packages"
+            android:textColor="#CCCCCC"
+            android:layout_gravity="center"
+            android:textSize="20dp"
+            android:singleLine="true" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/searchResultLayout"
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+        <TextView
+            android:id="@+id/searchResultCount"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="#666666"
+            android:textColor="#EEEEEE"
+            android:paddingTop="2dp"
+            android:paddingRight="2dp"
+            android:paddingBottom="2dp"
+            android:paddingLeft="2dp" />
+        <ListView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:background="#EEEEEE"
+            android:cacheColorHint="#F7F7F7"
+            android:id="@+id/searchResults" />
+    </LinearLayout>
+</LinearLayout>

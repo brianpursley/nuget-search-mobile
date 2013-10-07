@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="app_name">NuGetSearch</string>
+	<string name="unique_packages">Unique Packages</string>
+	<string name="total_package_downloads">Total Package Downloads</string>
+	<string name="total_packages">Total Packages</string>
+	<string name="wait_searching">Searching...</string>
+	<string name="wait_loading">Loading...</string>
+	<string name="wait_loading_more">Loading More...</string>
+	<string name="new_search_menu">New Search</string>
+	<string name="include_prerelease_menu">Include Prerelease</string>
+	<string name="exclude_prerelease_menu">Exclude Prerelease</string>
+	<string name="result_count_format">Search returned {0} results</string>
+	<string name="result_count_1">Search returned 1 result</string>
+	<string name="new_search">New Search</string>
+	<string name="release_type">Release Type</string>
+	<string name="stable_only">Stable Only</string>
+	<string name="include_prerelease">Include Prerelease</string>
+	<string name="sort_by">Sort By</string>
+	<string name="sort_by_popularity">Popularity</string>
+	<string name="sort_by_title">Title</string>
+	<string name="sort_by_date_added">Date Added</string>
+	<string name="prerelease">PRERELEASE</string>
+	<string name="project_site">Project Site</string>
+	<string name="license">License</string>
+	<string name="dependencies">Dependencies</string>
+	<string name="search_result_count_format">Search returned {0:N0} results</string>
+	<string name="search_result_count_1">Search returned 1 result</string>
+	<string name="version_history">Version History</string>
+	<string name="downloads">Downloads</string>
+	<string name="last_updated">Last Updated</string>
+	<string name="no_network_title">Not Connected</string>
+	<string name="no_network">Your device is not currently connected to the Internet.  An Internet connection is required in order to access the NuGet Gallery</string>
+	<string name="ok">OK</string>
+</resources>
