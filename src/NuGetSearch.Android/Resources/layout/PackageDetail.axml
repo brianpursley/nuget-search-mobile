@@ -127,6 +127,27 @@
                 android:textColor="#999999"
                 android:autoLink="web" />
             <TextView
+                android:id="@+id/authorsCaption"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="0dp"
+                android:paddingRight="5dp"
+                android:paddingTop="5dp"
+                android:paddingLeft="5dp"
+                android:text="@string/authors"
+                android:textColor="#999999"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/authors"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:linksClickable="true"
+                android:paddingBottom="5dp"
+                android:paddingRight="5dp"
+                android:paddingTop="0dp"
+                android:paddingLeft="5dp"
+                android:textColor="#999999" />
+            <TextView
                 android:id="@+id/dependenciesCaption"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

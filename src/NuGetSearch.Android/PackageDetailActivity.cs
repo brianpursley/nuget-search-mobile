@@ -191,7 +191,8 @@ namespace NuGetSearch.Android
 			
 			// Display project site link, license link, and dependencies list
 			this.DisplayProjectSite(pd);
-			this.DisplayLicense(pd);					
+			this.DisplayLicense(pd);
+			this.DisplayAuthors(pd);		
 			this.DisplayDependencies(pd);
 			
 			// Show the detail layout
@@ -230,6 +231,30 @@ namespace NuGetSearch.Android
 			// Populate and show/hide the license
 			licenseTextView.Text = pd.LicenseUrl;
 			licenseTextView.Visibility = string.IsNullOrEmpty(pd.LicenseUrl) ? ViewStates.Gone : ViewStates.Visible;
+		}
+		
+		/// <summary>
+		/// Displays the authors for the specified package details
+		/// </summary>
+		/// <param name="pd"></param>
+		private void DisplayAuthors(PackageDetail pd)
+		{
+			var authorsCaptionTextView = FindViewById<TextView>(Resource.Id.authorsCaption);
+			var authorsTextView = FindViewById<TextView>(Resource.Id.authors);
+
+			// Populate and show/hide the authors caption and authors
+			if (pd.Authors.Any())
+			{
+				authorsCaptionTextView.Visibility = ViewStates.Visible;
+				authorsTextView.Text = string.Join(", ", pd.Authors.ToArray());
+				authorsTextView.Visibility = ViewStates.Visible;
+			}
+			else 
+			{
+				authorsCaptionTextView.Visibility = ViewStates.Gone;
+				authorsTextView.Text = string.Empty;
+				authorsTextView.Visibility = ViewStates.Gone;
+			}
 		}
 		
 		/// <summary>

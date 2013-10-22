@@ -26,19 +26,21 @@
         <TextView
             android:id="@+id/title"
             android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_height="32dp"
             android:textSize="24dp"
             android:textStyle="normal"
             android:textColor="#666666"
             android:ellipsize="end"
             android:scrollbars="none"
-            android:singleLine="true" />
+            android:singleLine="true"
+            android:text="XygqpjX" />
         <TextView
             android:id="@+id/description"
             android:layout_width="match_parent"
-            android:layout_height="35dp"
+            android:layout_height="36dp"
             android:textColor="#999999"
             android:ellipsize="end"
-            android:scrollbars="none" />
+            android:scrollbars="none"
+            android:text="XygqpjXXygqpjXXygqpjXXygqpjXXygqpjXXygqpjXXygqpjXXygqpjX" />
     </LinearLayout>
 </RelativeLayout>

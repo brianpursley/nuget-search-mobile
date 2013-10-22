@@ -125,6 +125,8 @@
             android:visibility="gone"
             android:background="#EEEEEE"
             android:cacheColorHint="#F7F7F7"
-            android:id="@+id/searchResults" />
+            android:id="@+id/searchResults"
+            android:divider="#CCCCCC"
+            android:dividerHeight="1dp" />
     </LinearLayout>
 </LinearLayout>
