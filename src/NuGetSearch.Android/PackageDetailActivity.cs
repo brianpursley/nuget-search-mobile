@@ -192,7 +192,8 @@ namespace NuGetSearch.Android
 			// Display project site link, license link, and dependencies list
 			this.DisplayProjectSite(pd);
 			this.DisplayLicense(pd);
-			this.DisplayAuthors(pd);		
+			this.DisplayAuthors(pd);
+			this.DisplayTags(pd);
 			this.DisplayDependencies(pd);
 			
 			// Show the detail layout
@@ -255,6 +256,30 @@ namespace NuGetSearch.Android
 				authorsTextView.Text = string.Empty;
 				authorsTextView.Visibility = ViewStates.Gone;
 			}
+		}
+		
+		/// <summary>
+		/// Displays the tags for the specified package details
+		/// </summary>
+		/// <param name="pd"></param>
+		private void DisplayTags(PackageDetail pd)
+		{
+			var tagsCaptionTextView = FindViewById<TextView>(Resource.Id.tagsCaption);
+			var tagsTextView = FindViewById<TextView>(Resource.Id.tags);
+
+			// Populate and show/hide the tags caption and tags
+			if (pd.Tags.Any())
+			{
+				tagsCaptionTextView.Visibility = ViewStates.Visible;
+				tagsTextView.Text = string.Join(", ", pd.Tags.ToArray());
+				tagsTextView.Visibility = ViewStates.Visible;
+			}
+			else 
+			{
+				tagsCaptionTextView.Visibility = ViewStates.Gone;
+				tagsTextView.Text = string.Empty;
+				tagsTextView.Visibility = ViewStates.Gone;
+			}		
 		}
 		
 		/// <summary>
