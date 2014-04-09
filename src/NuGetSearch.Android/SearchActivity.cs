@@ -9,11 +9,6 @@ using Android.Views.InputMethods;
 using Android.Widget;
 using NuGetSearch.Common;
 
-// TODO: Test on various emulators
-// TODO: Checkin at Github
-// TODO: Deploy to Android App Store
-// TODO: Deploy to Amazon App Store
-
 namespace NuGetSearch.Android
 {
 	/// <summary>
