@@ -18,7 +18,13 @@ namespace NuGetSearch.Common
 		
 		public string Version { get; set; }
 		
-		public bool IsPrerelease { get; set; }
+		public bool IsPrerelease 
+        {
+            get
+            {
+                return this.Version.Contains("-");
+            }
+        }
 		
 		public string Description { get; set; }
 		

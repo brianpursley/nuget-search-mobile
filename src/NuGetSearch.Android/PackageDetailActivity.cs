@@ -24,7 +24,7 @@ namespace NuGetSearch.Android
 
 		public PackageDetailActivity() : base() 
 		{
-			this.nugetGalleryClient = new NuGetGalleryClient("http://www.nuget.org", new NetworkProvider());
+			this.nugetGalleryClient = new NuGetGalleryClient(new NetworkProvider());
 			this.networkChecker = new AndroidNetworkChecker(this);	
 		}
 
@@ -189,7 +189,7 @@ namespace NuGetSearch.Android
 		    // Populate the description
 			FindViewById<TextView>(Resource.Id.description).Text = pd.Description;
 			
-			// Display project site link, license link, and dependencies list
+            // Display project site link, license link, authors, tags, and dependencies list
 			this.DisplayProjectSite(pd);
 			this.DisplayLicense(pd);
 			this.DisplayAuthors(pd);
@@ -282,6 +282,23 @@ namespace NuGetSearch.Android
 			}		
 		}
 		
+        /// <summary>
+        /// Called when the user clicks on a dependency in the dependency list
+        /// </summary>
+        /// <param name="packageTitle">The package title of the dependency</param>
+        private void DependencySelected(string packageTitle)
+        {
+            if (!this.networkChecker.ValidateNetworkConnectivity())
+            {
+                return;
+            }
+
+            // Start the Package Detail Activity
+            var packageDetailIntent = new Intent(this, typeof(PackageDetailActivity));
+            packageDetailIntent.PutExtra("title", packageTitle);
+            this.StartActivity(packageDetailIntent);
+        }
+
 		/// <summary>
 		/// Displays the dependencies from the specified package details
 		/// </summary>
@@ -295,7 +312,7 @@ namespace NuGetSearch.Android
 			if (pd.Dependencies.Any())
 			{
 				// If there are dependencies, then create a DependencyAdapter to display them
-				var da = new DependencyAdapter(this, pd.Dependencies);
+                var da = new DependencyAdapter(this, pd.Dependencies, this.DependencySelected);
 				for (int i = 0; i < da.Count; i++)
 				{
 					dependenciesLayout.AddView(da.GetView(i, null, null));

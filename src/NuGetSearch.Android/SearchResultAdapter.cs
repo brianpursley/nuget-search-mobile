@@ -27,6 +27,9 @@ namespace NuGetSearch.Android
 		private bool includePrerelease;
 		private int totalCount = 0;
 		private List<SearchResultItem> items = new List<SearchResultItem>(InitialBatchSize + SubsequentBatchSize);
+        private RowSelectedDelegate rowSelectedCallback;
+
+        public delegate void RowSelectedDelegate(string packageId);
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="NuGetSearch.Android.SearchResultAdapter"/> class
@@ -36,15 +39,17 @@ namespace NuGetSearch.Android
 		/// <param name="orderBy">A string indicating how the results should be sorted</param>
 		/// <param name="includePrerelease">Boolean indicating whether prerelease packages should be included in the result</param>
 		public SearchResultAdapter(
-				Activity context, 
-				string searchTerm, 
-				string orderBy, 
-				bool includePrerelease) : base() 
+			Activity context, 
+			string searchTerm, 
+			string orderBy, 
+            bool includePrerelease, 
+            RowSelectedDelegate rowSelectedCallback) : base() 
 		{
 			this.context = context;
 			this.searchTerm = searchTerm;
 			this.orderBy = orderBy;
 			this.includePrerelease = includePrerelease;
+            this.rowSelectedCallback = rowSelectedCallback;
 			
 			this.nugetGalleryClient = new NuGetGalleryClient("http://www.nuget.org", new NetworkProvider());
 			this.networkChecker = new AndroidNetworkChecker(context);
@@ -276,7 +281,7 @@ namespace NuGetSearch.Android
 				this.items.AddRange(searchResult.Items);
 				this.NotifyDataSetChanged(); 
 			});
-			
+               
 			// Tell the icon manager to make sure it has a bitmap for the icons, and if not, to start loading them
 			AndroidIconManager.Current.Load(
 				searchResult.Items.Select(x => x.IconUrl).Distinct(),
@@ -345,17 +350,11 @@ namespace NuGetSearch.Android
 		/// <param name="e"></param>
 		private void View_Click(object sender, EventArgs e)
 		{
-			// Make sure there is network connectivity
-			if (!this.networkChecker.ValidateNetworkConnectivity()) 
-			{ 
-				return; 
-			}
-			
-			// Start the Package Detail Activity
-			View view = sender as View;
-			var packageDetailIntent = new Intent(this.context, typeof(PackageDetailActivity));
-			packageDetailIntent.PutExtra("id", view.Tag.ToString());
-			this.context.StartActivity(packageDetailIntent);
+            if (rowSelectedCallback != null)
+            {
+                View view = sender as View;
+                rowSelectedCallback(view.Tag.ToString());
+            }
 		}
 	}
 }
