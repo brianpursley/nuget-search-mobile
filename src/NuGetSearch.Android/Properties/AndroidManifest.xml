@@ -1,8 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.cinlogic.nugetsearch" android:versionName="1.1" android:versionCode="4">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.cinlogic.nugetsearch" android:versionName="1.03" android:versionCode="3">
 	<uses-sdk />
-	<application android:icon="@drawable/icon" android:label="NuGet Search">
-	</application>
+	<application android:icon="@drawable/icon" android:label="NuGet Search"></application>
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 	<uses-permission android:name="android.permission.INTERNET" />
 </manifest>

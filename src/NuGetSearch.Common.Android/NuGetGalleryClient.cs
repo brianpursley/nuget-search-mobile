@@ -13,21 +13,9 @@ namespace NuGetSearch.Common
 	/// </summary>
 	public class NuGetGalleryClient : INuGetGalleryClient
 	{
-        private const string DefaultNuGetServerUrl = "http://www.nuget.org";
-        private static readonly DateTime UnpublishedDateTime = new DateTime(1900, 1, 1, 0, 0, 0);
-
 		private string nugetServerUrl;
 		private INetworkProvider networkProvider;
 		
-        /// <summary>
-        /// Initializes a new instance of the <see cref="NuGetSearch.Common.NuGetGalleryClient"/> class.
-        /// </summary>
-        /// <param name="networkProvider">Network provider</param>
-        public NuGetGalleryClient(INetworkProvider networkProvider) 
-            : this(DefaultNuGetServerUrl, networkProvider)
-        {
-        }
-
 		/// <summary>
 		/// Initializes a new instance of the <see cref="NuGetSearch.Common.NuGetGalleryClient"/> class.
 		/// </summary>
@@ -107,7 +95,6 @@ namespace NuGetSearch.Common
 			string url = string.Format("{0}/api/v2/Packages()?$filter=Id eq '{1}'&$orderby=Created desc", this.nugetServerUrl, title.Replace("'", "''"));
 			XDocument xml = await this.networkProvider.GetXmlAsync(url).ConfigureAwait(false);
 			return xml.Descendants(Xmlns.Atom + "entry")
-                .Where(x => DateTime.Parse(x.Descendants(Xmlns.D + "Published").First().Value) != UnpublishedDateTime)
 				.Select(x => new HistoryItem 
 				{
 					Id = x.Descendants(Xmlns.Atom + "id").First().Value,
@@ -136,6 +123,7 @@ namespace NuGetSearch.Common
 				DisplayTitle = Utility.ChooseNotNullOrEmpty(xml.Descendants(Xmlns.D + "Title").First().Value, xml.Descendants(Xmlns.Atom + "title").First().Value),
 				Description = xml.Descendants(Xmlns.D + "Description").First().Value,
 				Version = xml.Descendants(Xmlns.D + "Version").First().Value,
+				IsPrerelease = bool.Parse(xml.Descendants(Xmlns.D + "IsPrerelease").First().Value),
 				DownloadCount = int.Parse(xml.Descendants(Xmlns.D + "DownloadCount").First().Value),
 				VersionDownloadCount = int.Parse(xml.Descendants(Xmlns.D + "VersionDownloadCount").First().Value),
 				Created = DateTime.Parse(xml.Descendants(Xmlns.D + "Created").First().Value),
