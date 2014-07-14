@@ -17,15 +17,18 @@ namespace NuGetSearch.Android
 	[Activity(Label = "NuGet Search", WindowSoftInputMode = SoftInput.StateVisible, ConfigurationChanges = ConfigChanges.Orientation)]
 	public class SearchActivity : Activity
 	{
+        private const bool DefaultIncludePrerelease = false;
+        private const string DefaultOrderBy = "DownloadCount desc";
+
 		private INuGetGalleryClient nugetGalleryClient;
 		private INetworkChecker networkChecker;
-		private bool includePrerelease = false;
-		private string orderBy = "DownloadCount desc";
+        private bool includePrerelease = DefaultIncludePrerelease;
+        private string orderBy = DefaultOrderBy;
 		private string searchTerm = null;
 		
 		public SearchActivity() : base()
 		{
-			this.nugetGalleryClient = new NuGetGalleryClient("http://www.nuget.org", new NetworkProvider());
+			this.nugetGalleryClient = new NuGetGalleryClient(new NetworkProvider());
 			this.networkChecker = new AndroidNetworkChecker(this);
 		}
 		
@@ -211,6 +214,24 @@ namespace NuGetSearch.Android
 			inputMethodManager.HideSoftInputFromWindow(FindViewById<EditText>(Resource.Id.searchTerm).WindowToken, HideSoftInputFlags.None);
 		}
 		
+        /// <summary>
+        /// Called when a package is selected from the search result list
+        /// </summary>
+        /// <param name="packageId">The Id of the selected package</param>
+        private void PackageSelected(string packageId)
+        {
+            // Make sure there is network connectivity
+            if (!this.networkChecker.ValidateNetworkConnectivity()) 
+            { 
+                return; 
+            }
+
+            // Start the Package Detail Activity
+            var packageDetailIntent = new Intent(this, typeof(PackageDetailActivity));
+            packageDetailIntent.PutExtra("id", packageId);
+            this.StartActivity(packageDetailIntent);
+        }
+
 		/// <summary>
 		/// Runs a task that performs the search and displays the results
 		/// </summary>
@@ -238,7 +259,8 @@ namespace NuGetSearch.Android
 						this, 
 						this.searchTerm, 
 						this.orderBy, 
-						this.includePrerelease);
+                        this.includePrerelease,
+                        this.PackageSelected);
 					
 					// Display the search results
 					this.RunOnUiThread(() => 
