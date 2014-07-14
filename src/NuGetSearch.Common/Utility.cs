@@ -1,3 +1,5 @@
+using System;
+
 namespace NuGetSearch.Common
 {
 	/// <summary>
@@ -40,5 +42,6 @@ namespace NuGetSearch.Common
 				return s.Substring(0, length) + "...";
 			}
 		}
+
 	}
 }
