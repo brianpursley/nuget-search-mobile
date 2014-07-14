@@ -17,8 +17,8 @@ namespace NuGetSearch.Common
 		
 		public int VersionDownloadCount { get; set; }
 		
-		public DateTime Created { get; set; }
+        public DateTime Created { get; set; }
 		
-		public DateTime Published { get; set; }
+        public DateTime Published { get; set; }
 	}
 }
