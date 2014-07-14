@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.30703</ProductVersion>
+    <ProductVersion>10.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{2714F20B-9EE4-402C-B851-F0F5045E6FF2}</ProjectGuid>
     <ProjectTypeGuids>{EFBA0AD7-5A72-4C68-AF49-83D382785DCF};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -14,7 +14,6 @@
     <AndroidResgenFile>Resources\Resource.designer.cs</AndroidResgenFile>
     <AndroidResgenClass>Resource</AndroidResgenClass>
     <AssemblyName>NuGetSearch.Common.Android</AssemblyName>
-    <ReleaseVersion>1.1</ReleaseVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -44,49 +43,28 @@
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Core" />
   </ItemGroup>
-  <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
   <ItemGroup>
-    <Compile Include="..\NuGetSearch.Common\HistoryItem.cs">
-      <Link>HistoryItem.cs</Link>
-    </Compile>
-    <Compile Include="..\NuGetSearch.Common\IconManager.cs">
-      <Link>IconManager.cs</Link>
-    </Compile>
-    <Compile Include="..\NuGetSearch.Common\IIconManager.cs">
-      <Link>IIconManager.cs</Link>
-    </Compile>
-    <Compile Include="..\NuGetSearch.Common\INetworkChecker.cs">
-      <Link>INetworkChecker.cs</Link>
-    </Compile>
-    <Compile Include="..\NuGetSearch.Common\INetworkProvider.cs">
-      <Link>INetworkProvider.cs</Link>
-    </Compile>
-    <Compile Include="..\NuGetSearch.Common\INuGetGalleryClient.cs">
-      <Link>INuGetGalleryClient.cs</Link>
-    </Compile>
-    <Compile Include="..\NuGetSearch.Common\NetworkProvider.cs">
-      <Link>NetworkProvider.cs</Link>
-    </Compile>
-    <Compile Include="..\NuGetSearch.Common\NuGetGalleryClient.cs">
-      <Link>NuGetGalleryClient.cs</Link>
-    </Compile>
-    <Compile Include="..\NuGetSearch.Common\NuGetStatistics.cs">
-      <Link>NuGetStatistics.cs</Link>
-    </Compile>
-    <Compile Include="..\NuGetSearch.Common\PackageDependency.cs">
-      <Link>PackageDependency.cs</Link>
-    </Compile>
-    <Compile Include="..\NuGetSearch.Common\PackageDetail.cs">
-      <Link>PackageDetail.cs</Link>
-    </Compile>
-    <Compile Include="..\NuGetSearch.Common\SearchResult.cs">
-      <Link>SearchResult.cs</Link>
-    </Compile>
-    <Compile Include="..\NuGetSearch.Common\SearchResultItem.cs">
-      <Link>SearchResultItem.cs</Link>
-    </Compile>
-    <Compile Include="..\NuGetSearch.Common\Utility.cs">
-      <Link>Utility.cs</Link>
-    </Compile>
+    <Compile Include="Resources\Resource.designer.cs" />
+    <Compile Include="NuGetStatistics.cs" />
+    <Compile Include="SearchResult.cs" />
+    <Compile Include="SearchResultItem.cs" />
+    <Compile Include="PackageDetail.cs" />
+    <Compile Include="PackageDependency.cs" />
+    <Compile Include="HistoryItem.cs" />
+    <Compile Include="Utility.cs" />
+    <Compile Include="IIconManager.cs" />
+    <Compile Include="INetworkChecker.cs" />
+    <Compile Include="NetworkProvider.cs" />
+    <Compile Include="INetworkProvider.cs" />
+    <Compile Include="IconManager.cs" />
+    <Compile Include="NuGetGalleryClient.cs" />
+    <Compile Include="INuGetGalleryClient.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\AboutResources.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\values\Strings.xml" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
 </Project>

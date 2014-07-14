@@ -13,11 +13,9 @@ namespace NuGetSearch.Android
 	/// </summary>
 	internal class DependencyAdapter : BaseAdapter<PackageDependency>
 	{
+		private INetworkChecker networkChecker;
 		private Activity context;
 		private IList<PackageDependency> dependencies;
-        private RowSelectedDelegate rowSelectedCallback;
-
-        public delegate void RowSelectedDelegate(string packageTitle);
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="NuGetSearch.Android.DependencyAdapter"/> class.
@@ -25,13 +23,13 @@ namespace NuGetSearch.Android
 		/// <param name="context">The parent context</param>
 		/// <param name="dependencies">The dependencies to include in this adapter</param>
 		public DependencyAdapter(
-			Activity context, 
-            IList<PackageDependency> dependencies,
-            RowSelectedDelegate rowSelectedCallback) : base()
+				Activity context, 
+				IList<PackageDependency> dependencies) : base()
 		{
 			this.context = context;
 			this.dependencies = dependencies;
-            this.rowSelectedCallback = rowSelectedCallback;
+			
+			this.networkChecker = new AndroidNetworkChecker(context);
 		}
 
 		/// <summary>
@@ -110,11 +108,17 @@ namespace NuGetSearch.Android
 		/// <param name="e"></param>
 		private void View_Click(object sender, EventArgs e)
 		{
-            if (this.rowSelectedCallback != null)
-            {
-                View view = sender as View;
-                this.rowSelectedCallback(view.Tag.ToString());
-            }
+			// Make sure there is network connectivity
+			if (!this.networkChecker.ValidateNetworkConnectivity())
+			{
+				return;
+			}
+			
+			// Start the Package Detail Activity
+			View view = sender as View;
+			var packageDetailIntent = new Intent(this.context, typeof(PackageDetailActivity));
+			packageDetailIntent.PutExtra("title", view.Tag.ToString());
+			this.context.StartActivity(packageDetailIntent);
 		}
 	}
 }
