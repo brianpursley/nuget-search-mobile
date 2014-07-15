@@ -1,33 +1,40 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using MonoTouch.UIKit;
-using System.Collections.Generic;
 
 namespace NuGetSearch.IOS
 {
+    /// <summary>
+    /// Version history table view header.
+    /// </summary>
     public class VersionHistoryTableViewHeader : UIView
     {
         public const float RowHeight = 17f;
 
-        private static readonly UIFont font = UIFont.FromName("HelveticaNeue-Bold", 14f);
+        private static readonly UIFont Font = UIFont.FromName("HelveticaNeue-Bold", 14f);
 
         private UILabel versionLabel;
         private UILabel downloadCountLabel;
         private UILabel lastUpdatedLabel;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NuGetSearch.IOS.VersionHistoryTableViewHeader"/> class.
+        /// </summary>
+        /// <param name="frame">Frame.</param>
         public VersionHistoryTableViewHeader(RectangleF frame)
             : base(frame)
         {
             this.Add(this.versionLabel = new UILabel()
             {
-                Font = font,
+                Font = Font,
                 Text = Resources.GetString(Resource.String.version_history),
                 TextColor = UIColor.Black
             });
 
             this.Add(this.downloadCountLabel = new UILabel()
             {
-                Font = font,
+                Font = Font,
                 Text = Resources.GetString(Resource.String.downloads),
                 TextColor = UIColor.Black,
                 TextAlignment = UITextAlignment.Right
@@ -35,21 +42,24 @@ namespace NuGetSearch.IOS
 
             this.Add(this.lastUpdatedLabel = new UILabel()
             {
-                Font = font,
+                Font = Font,
                 Text = Resources.GetString(Resource.String.last_updated),
                 TextColor = UIColor.Black,
                 TextAlignment = UITextAlignment.Right
             });
         }
 
+        /// <summary>
+        /// Defines the layout of the controls in the header
+        /// </summary>
         public override void LayoutSubviews()
         {
             base.LayoutSubviews();
             const float pad = 8;
-            float w = this.Bounds.Width - pad * 2;
+            float w = this.Bounds.Width - (pad * 2);
             float w1 = (w / 3) - pad;
             float w2 = (w / 3) - pad;
-            float w3 = (w / 3);
+            float w3 = w / 3;
             const float y = 0;
             float x1 = pad;
             float x2 = x1 + w1 + pad;
@@ -59,6 +69,10 @@ namespace NuGetSearch.IOS
             this.lastUpdatedLabel.Frame = new RectangleF(x3, y, w3, RowHeight);
         }
 
+        /// <summary>
+        /// Draw the header
+        /// </summary>
+        /// <param name="rect">Rect.</param>
         public override void Draw(RectangleF rect)
         {
             base.Draw(rect);
@@ -75,4 +89,3 @@ namespace NuGetSearch.IOS
         }
     }
 }
-

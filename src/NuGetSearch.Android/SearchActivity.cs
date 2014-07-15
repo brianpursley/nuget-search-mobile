@@ -26,6 +26,9 @@ namespace NuGetSearch.Android
         private string orderBy = DefaultOrderBy;
 		private string searchTerm = null;
 		
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NuGetSearch.Android.SearchActivity"/> class.
+        /// </summary>
 		public SearchActivity() : base()
 		{
 			this.nugetGalleryClient = new NuGetGalleryClient(new NetworkProvider());

@@ -42,6 +42,5 @@ namespace NuGetSearch.Common
 				return s.Substring(0, length) + "...";
 			}
 		}
-
 	}
 }

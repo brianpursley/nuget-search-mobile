@@ -12,6 +12,11 @@ namespace NuGetSearch.IOS
         private UIActivityIndicatorView activitySpinner;
         private UILabel loadingLabel;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NuGetSearch.IOS.LoadingOverlay"/> class.
+        /// </summary>
+        /// <param name="frame">Frame.</param>
+        /// <param name="text">Text.</param>
         public LoadingOverlay(RectangleF frame, string text) : base(frame)
 		{
 			// configurable bits

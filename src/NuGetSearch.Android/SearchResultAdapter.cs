@@ -29,8 +29,6 @@ namespace NuGetSearch.Android
 		private List<SearchResultItem> items = new List<SearchResultItem>(InitialBatchSize + SubsequentBatchSize);
         private RowSelectedDelegate rowSelectedCallback;
 
-        public delegate void RowSelectedDelegate(string packageId);
-
 		/// <summary>
 		/// Initializes a new instance of the <see cref="NuGetSearch.Android.SearchResultAdapter"/> class
 		/// </summary>
@@ -38,6 +36,7 @@ namespace NuGetSearch.Android
 		/// <param name="searchTerm">The search term entered by the user</param>
 		/// <param name="orderBy">A string indicating how the results should be sorted</param>
 		/// <param name="includePrerelease">Boolean indicating whether prerelease packages should be included in the result</param>
+        /// <param name="rowSelectedCallback">method to call when a row is selected</param>
 		public SearchResultAdapter(
 			Activity context, 
 			string searchTerm, 
@@ -56,7 +55,9 @@ namespace NuGetSearch.Android
 
 			this.LoadSearchResultItems(InitialBatchSize);
 		}
-		
+
+        public delegate void RowSelectedDelegate(string packageId);
+
 		/// <summary>
 		/// Gets the view type count.  There are two view types used by this adapter:
 		///   0 = Normal list item
@@ -113,7 +114,7 @@ namespace NuGetSearch.Android
 		/// Gets the <see cref="SearchResultItem"/> with the specified position.
 		/// </summary>
 		/// <returns>The SearchResultItem at the specified position</returns>
-		/// <param name="position"></param>
+		/// <param name="position">The position of the item to return</param>
 		public override SearchResultItem this[int position] 
 		{  
 			get 
@@ -126,7 +127,7 @@ namespace NuGetSearch.Android
 		/// Gets the item ID at the specified position.  This adapter simply returns the position as the ID.
 		/// </summary>
 		/// <returns>The item ID</returns>
-		/// <param name="position"></param>
+        /// <param name="position">The position of the item to return</param>
 		public override long GetItemId(int position)
 		{
 			return position;
@@ -136,7 +137,7 @@ namespace NuGetSearch.Android
 		/// Gets the type of item view at the specified position
 		/// </summary>
 		/// <returns>The item view type</returns>
-		/// <param name="position"></param>
+        /// <param name="position">The position of the item to return</param>
 		public override int GetItemViewType(int position)
 		{
 			return this.IsLoadingMorePosition(position) ? 1 : 0;
@@ -146,9 +147,9 @@ namespace NuGetSearch.Android
 		/// Gets the view to use to display the item at the specified position
 		/// </summary>
 		/// <returns>A view for displaying the item at the specified position</returns>
-		/// <param name="position"></param>
-		/// <param name="convertView"></param>
-		/// <param name="parent"></param>
+        /// <param name="position">The position of the item to return</param>
+		/// <param name="convertView">The view to convert</param>
+		/// <param name="parent">The parent view group</param>
 		public override View GetView(int position, View convertView, ViewGroup parent)
 		{
 			if (this.IsLoadingMorePosition(position))
@@ -226,10 +227,55 @@ namespace NuGetSearch.Android
 			iconImageView.Tag = "default";
 		}
 
+        /// <summary>
+        /// Sets the image of the specified ImageView using the specified URL
+        /// </summary>
+        /// <param name="iconImageView">Image view to set the image of</param>
+        /// <param name="url">URL of the image to use</param>
+        private static void SetIconImage(ImageView iconImageView, string url)
+        {
+            // If the tag is set already and equals the url, then the image has already been set, so just return
+            if (iconImageView.Tag != null && iconImageView.Tag.ToString() == url)
+            {
+                return;
+            }
+
+            // Check whether the icon manager has loaded the image yet or not
+            if (AndroidIconManager.Current.IsLoaded(url))
+            {
+                // If the image has been loaded, then get it from the icon manager and set it on the image view
+                Bitmap icon = AndroidIconManager.Current.GetIcon(url);
+                if (icon == null)
+                {
+                    SearchResultAdapter.SetDefaultIconImage(iconImageView);
+                }
+                else
+                {
+                    try
+                    {
+                        iconImageView.SetImageBitmap(icon);
+                    }
+                    catch
+                    {
+                        SearchResultAdapter.SetDefaultIconImage(iconImageView);
+                    }
+                }
+
+                // Set the tag so we can quickly tell whether this image view has already had its image set or not
+                iconImageView.Tag = url;
+            }
+            else
+            {
+                // If the image has not yet been loaded, set the default icon for now.
+                // It will be set to the real image later, after it has been loaded.
+                SearchResultAdapter.SetDefaultIconImage(iconImageView);
+            }
+        }
+
 		/// <summary>
 		/// Ensures the result item at the specified position has been loaded, and if not, loads a new batch of results
 		/// </summary>
-		/// <param name="position"></param>
+		/// <param name="position">The position to ensure is loaded</param>
 		private void EnsurePositionLoaded(int position)
 		{
 			// If this position is already loaded, then return immediately
@@ -254,7 +300,7 @@ namespace NuGetSearch.Android
 		/// <summary>
 		/// Loads search results into the adapter up to a specified position
 		/// </summary>
-		/// <param name="toPosition"></param>
+		/// <param name="toPosition">The position to which to load items</param>
 		private void LoadSearchResultItems(int toPosition)
 		{
 			// Determine if this is the first load
@@ -292,55 +338,10 @@ namespace NuGetSearch.Android
 		/// Returns true if the specified position is the "Loading More..." position
 		/// </summary>
 		/// <returns><c>true</c> if the specified position is the "Loading More..." position; otherwise, <c>false</c>.</returns>
-		/// <param name="position"></param>
+		/// <param name="position">The position to check if it is the loading more message</param>
 		private bool IsLoadingMorePosition(int position)
 		{
 			return position >= this.items.Count;
-		}
-
-		/// <summary>
-		/// Sets the image of the specified ImageView using the specified URL
-		/// </summary>
-		/// <param name="iconImageView">Image view to set the image of</param>
-		/// <param name="url">URL of the image to use</param>
-		private static void SetIconImage(ImageView iconImageView, string url)
-		{
-			// If the tag is set already and equals the url, then the image has already been set, so just return
-			if (iconImageView.Tag != null && iconImageView.Tag.ToString() == url)
-			{
-				return;
-			}
-			
-			// Check whether the icon manager has loaded the image yet or not
-			if (AndroidIconManager.Current.IsLoaded(url))
-			{
-				// If the image has been loaded, then get it from the icon manager and set it on the image view
-				Bitmap icon = AndroidIconManager.Current.GetIcon(url);
-				if (icon == null)
-				{
-					SearchResultAdapter.SetDefaultIconImage(iconImageView);
-				}
-				else
-				{
-					try
-					{
-						iconImageView.SetImageBitmap(icon);
-					}
-					catch
-					{
-						SearchResultAdapter.SetDefaultIconImage(iconImageView);
-					}
-				}
-				
-				// Set the tag so we can quickly tell whether this image view has already had its image set or not
-				iconImageView.Tag = url;
-			}
-			else
-			{
-				// If the image has not yet been loaded, set the default icon for now.
-				// It will be set to the real image later, after it has been loaded.
-				SearchResultAdapter.SetDefaultIconImage(iconImageView);
-			}
 		}
 
 		/// <summary>
@@ -350,10 +351,10 @@ namespace NuGetSearch.Android
 		/// <param name="e"></param>
 		private void View_Click(object sender, EventArgs e)
 		{
-            if (rowSelectedCallback != null)
+            if (this.rowSelectedCallback != null)
             {
                 View view = sender as View;
-                rowSelectedCallback(view.Tag.ToString());
+                this.rowSelectedCallback(view.Tag.ToString());
             }
 		}
 	}

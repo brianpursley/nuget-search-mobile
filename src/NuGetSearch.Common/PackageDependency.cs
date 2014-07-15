@@ -8,6 +8,10 @@ namespace NuGetSearch.Common
 	/// </summary>
 	public class PackageDependency
 	{
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NuGetSearch.Common.PackageDependency"/> class.
+        /// </summary>
+        /// <param name="dependency">Dependency.</param>
 		public PackageDependency(string dependency)
 		{
 			if (string.IsNullOrEmpty(dependency)) 

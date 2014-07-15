@@ -6,38 +6,53 @@ using NuGetSearch.Common;
 
 namespace NuGetSearch.IOS
 {
+    /// <summary>
+    /// Dependency table view cell.
+    /// </summary>
     public class DependencyTableViewCell : UITableViewCell  
     {
         public const float RowHeight = 40f;
 
-        private static readonly UIFont font = UIFont.FromName("HelveticaNeue", 14f);
+        private static readonly UIFont Font = UIFont.FromName("HelveticaNeue", 14f);
 
         private UILabel titleLabel;
         private UILabel versionRangeLabel;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NuGetSearch.IOS.DependencyTableViewCell"/> class.
+        /// </summary>
+        /// <param name="reuseIdentifier">Reuse identifier.</param>
         public DependencyTableViewCell(string reuseIdentifier)
             : this(new NSString(reuseIdentifier))
         {
             this.SelectionStyle = UITableViewCellSelectionStyle.None;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NuGetSearch.IOS.DependencyTableViewCell"/> class.
+        /// </summary>
+        /// <param name="reuseIdentifier">Reuse identifier.</param>
         public DependencyTableViewCell(NSString reuseIdentifier) 
-            : base (UITableViewCellStyle.Default, reuseIdentifier)
+            : base(UITableViewCellStyle.Default, reuseIdentifier)
         {
             this.ContentView.BackgroundColor = UIColor.White;
 
             this.ContentView.Add(this.titleLabel = new UILabel()
             {
-                Font = font,
+                Font = Font,
             });
 
             this.ContentView.Add(this.versionRangeLabel = new UILabel()
             {
-                Font = font,
+                Font = Font,
                 TextColor = UIColor.Gray,
             });
         }
 
+        /// <summary>
+        /// Displays the specified dependency in the cell
+        /// </summary>
+        /// <param name="dependency">Dependency.</param>
         public void UpdateCell(PackageDependency dependency)
         {
             this.titleLabel.Text = dependency.Title;
@@ -46,11 +61,14 @@ namespace NuGetSearch.IOS
                 string.Format("({0})", dependency.VersionRange);
         }
 
+        /// <summary>
+        /// Defines the layout of the controls within the cell
+        /// </summary>
         public override void LayoutSubviews()
         {
             base.LayoutSubviews();
             const float pad = 8;
-            float w = this.ContentView.Bounds.Width - pad * 2;
+            float w = this.ContentView.Bounds.Width - (pad * 2);
             const float h1 = 17;
             const float h2 = 17;
             float x = pad;

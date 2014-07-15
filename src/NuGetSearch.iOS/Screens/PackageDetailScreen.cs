@@ -22,6 +22,11 @@ namespace NuGetSearch.IOS
         private string packageId;
         private string packageTitle;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NuGetSearch.IOS.PackageDetailScreen"/> class.
+        /// </summary>
+        /// <param name="packageId">Package identifier.</param>
+        /// <param name="packageTitle">Package title.</param>
         public PackageDetailScreen(string packageId, string packageTitle)
             : base("PackageDetailScreen", null)
         {
@@ -32,11 +37,19 @@ namespace NuGetSearch.IOS
             this.networkChecker = new IOSNetworkChecker();  
         }
 
+        /// <summary>
+        /// Gets a value indicating whether this <see cref="NuGetSearch.IOS.PackageDetailScreen"/> user interface idiom
+        /// is phone.
+        /// </summary>
+        /// <value><c>true</c> if user interface idiom is phone; otherwise, <c>false</c>.</value>
         private static bool UserInterfaceIdiomIsPhone
         {
             get { return UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Phone; }
         }
 
+        /// <summary>
+        /// Called when the system is running low on memory
+        /// </summary>
         public override void DidReceiveMemoryWarning()
         {
             // Releases the view if it doesn't have a superview.
@@ -45,6 +58,9 @@ namespace NuGetSearch.IOS
             // Release any cached data, images, etc that aren't in use.
         }
 
+        /// <summary>
+        /// Called after the view has been loaded
+        /// </summary>
         public override void ViewDidLoad()
         {
             base.ViewDidLoad();
@@ -70,9 +86,12 @@ namespace NuGetSearch.IOS
             this.projectSiteCaptionLabel.Text = Resources.GetString(Resource.String.project_site);
             this.authorsCaptionLabel.Text = Resources.GetString(Resource.String.authors);
             this.tagsCaptionLabel.Text = Resources.GetString(Resource.String.tags);
-
         }
 
+        /// <summary>
+        /// Called before the view will be shown
+        /// </summary>
+        /// <param name="animated">If set to <c>true</c> animated.</param>
         public override void ViewWillAppear(bool animated)
         {
             base.ViewWillAppear(animated);
@@ -80,6 +99,9 @@ namespace NuGetSearch.IOS
             this.DisplayPackageDetailsAsync();
         }
 
+        /// <summary>
+        /// Called before the view lays out the subviews
+        /// </summary>
         public override void ViewWillLayoutSubviews()
         {
             base.ViewWillLayoutSubviews();
@@ -103,6 +125,29 @@ namespace NuGetSearch.IOS
             this.projectSiteButton.TitleLabel.PreferredMaxLayoutWidth = w;
             this.authorsLabel.PreferredMaxLayoutWidth = w;
             this.tagsLabel.PreferredMaxLayoutWidth = w;
+        }
+
+        /// <summary>
+        /// Sets the table view height automatically based on its contents
+        /// </summary>
+        /// <param name="tableView">Table view.</param>
+        private static void AutoSizeTableViewHeight(UITableView tableView)
+        {
+            var frame = tableView.Frame;
+            var height = GetTableViewCellsHeight(tableView, 0);
+            tableView.Frame = new RectangleF(frame.Left, frame.Top, frame.Width, height);
+        }
+
+        /// <summary>
+        /// Gets the height of the table view cells within a section
+        /// </summary>
+        /// <returns>The table view cells height.</returns>
+        /// <param name="tableView">Table view.</param>
+        /// <param name="sectionIndex">Section index.</param>
+        private static float GetTableViewCellsHeight(UITableView tableView, int sectionIndex)
+        {
+            tableView.LayoutIfNeeded();
+            return tableView.ContentSize.Height;
         }
          
         /// <summary>
@@ -196,6 +241,7 @@ namespace NuGetSearch.IOS
                     UIApplication.SharedApplication.OpenUrl(NSUrl.FromString(pd.ProjectUrl));
                 };
             }
+
             this.projectSiteCaptionLabel.Hidden = false;
             this.projectSiteButton.Hidden = false;
         }
@@ -294,19 +340,6 @@ namespace NuGetSearch.IOS
             }
         }
 
-        private static void AutoSizeTableViewHeight(UITableView tableView)
-        {
-            var frame = tableView.Frame;
-            var height = GetTableViewCellsHeight(tableView, 0);
-            tableView.Frame = new RectangleF(frame.Left, frame.Top, frame.Width, height);
-        }
-
-        private static float GetTableViewCellsHeight(UITableView tableView, int sectionIndex)
-        {
-            tableView.LayoutIfNeeded();
-            return tableView.ContentSize.Height;
-        }
-
         /// <summary>
         /// Display an overlay with a loading message
         /// </summary>
@@ -333,7 +366,10 @@ namespace NuGetSearch.IOS
             }
         }
 
-
+        /// <summary>
+        /// Method called when a dependency row is selected
+        /// </summary>
+        /// <param name="dependency">The selected dependency</param>
         private void DependencySelected(PackageDependency dependency)
         {
             if (this.networkChecker.ValidateNetworkConnectivity()) 
@@ -350,6 +386,10 @@ namespace NuGetSearch.IOS
             }
         }
 
+        /// <summary>
+        /// Method called when a version history row is selected
+        /// </summary>
+        /// <param name="historyItem">The selected history item</param>
         private void VersionHistorySelected(HistoryItem historyItem)
         {
             if (this.networkChecker.ValidateNetworkConnectivity()) 
@@ -365,6 +405,5 @@ namespace NuGetSearch.IOS
                 }
             }
         }
-
     }
 }

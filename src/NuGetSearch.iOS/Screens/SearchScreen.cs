@@ -20,6 +20,9 @@ namespace NuGetSearch.IOS
 		private string searchTerm = null;
 		private LoadingOverlay loadingOverlay = null;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NuGetSearch.IOS.SearchScreen"/> class.
+        /// </summary>
         public SearchScreen()
             : base("SearchScreen", null)
         {
@@ -28,7 +31,7 @@ namespace NuGetSearch.IOS
         }
 
         /// <summary>
-        /// Returns whether the app is running as a Phone
+        /// Gets a value indicating whether the app is running as a Phone
         /// </summary>
         /// <value><c>true</c> if user interface idiom is phone; otherwise, <c>false</c>.</value>
         private static bool UserInterfaceIdiomIsPhone 
@@ -36,6 +39,9 @@ namespace NuGetSearch.IOS
 			get { return UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Phone; }
 		}
 
+        /// <summary>
+        /// Called after the view has loaded
+        /// </summary>
 		public override void ViewDidLoad()
 		{
             base.ViewDidLoad();
@@ -58,18 +64,31 @@ namespace NuGetSearch.IOS
             this.searchBar.SearchButtonClicked += this.SearchBar_SearchButtonClicked;
         }
 
+        /// <summary>
+        /// Called before the view appears
+        /// </summary>
+        /// <param name="animated">If set to <c>true</c> animated.</param>
         public override void ViewWillAppear(bool animated)
         {
             base.ViewWillAppear(animated);
             this.NavigationController.SetNavigationBarHidden(true, true);
         }
 
+        /// <summary>
+        /// Search button click handler
+        /// </summary>
+        /// <param name="sender">Sender.</param>
+        /// <param name="e">E.</param>
         private void SearchBar_SearchButtonClicked(object sender, EventArgs e)
 		{
 			this.searchTerm = this.searchBar.Text;
 			this.SearchAsync();
 		}
             
+        /// <summary>
+        /// Called when a package is selected from the search result list
+        /// </summary>
+        /// <param name="searchResultItem">Search result item.</param>
         private void PackageSelected(SearchResultItem searchResultItem)
         {
             if (this.networkChecker.ValidateNetworkConnectivity()) 
@@ -86,6 +105,10 @@ namespace NuGetSearch.IOS
             }
         }
 
+        /// <summary>
+        /// Called when a search result list item has been updated
+        /// </summary>
+        /// <param name="indexPath">Index path.</param>
         private void RowChanged(NSIndexPath indexPath)
         {
             this.InvokeOnMainThread(() =>

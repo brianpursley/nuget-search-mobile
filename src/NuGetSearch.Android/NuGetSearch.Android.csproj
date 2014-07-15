@@ -44,6 +44,7 @@
     <None Include="Properties\AndroidManifest.xml" />
     <None Include="Resources\AboutResources.txt" />
     <None Include="Assets\AboutAssets.txt" />
+    <None Include="Settings.StyleCop" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
   <ItemGroup />
@@ -78,7 +79,7 @@
     <AndroidResource Include="Resources\layout\SearchResultLoadingItem.axml" />
     <AndroidResource Include="Resources\values\Styles.xml" />
     <AndroidResource Include="Resources\drawable\splash.png" />
-    <AndroidResource Include="Resources\Search.axml" />
+    <AndroidResource Include="Resources\layout\Search.axml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NuGetSearch.Common.Android\NuGetSearch.Common.Android.csproj">

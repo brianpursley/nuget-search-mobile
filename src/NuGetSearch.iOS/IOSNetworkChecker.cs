@@ -16,7 +16,6 @@ namespace NuGetSearch.IOS
 		public bool HasNetworkConnectivity()
 		{
             return true;
-            //return Reachability.InternetConnectionStatus() != NetworkStatus.NotReachable;
 		}
 
 		/// <summary>

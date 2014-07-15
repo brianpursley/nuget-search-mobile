@@ -22,6 +22,9 @@ namespace NuGetSearch.Android
 		private INuGetGalleryClient nugetGalleryClient;
 		private INetworkChecker networkChecker;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NuGetSearch.Android.PackageDetailActivity"/> class.
+        /// </summary>
 		public PackageDetailActivity() : base() 
 		{
 			this.nugetGalleryClient = new NuGetGalleryClient(new NetworkProvider());
@@ -31,7 +34,7 @@ namespace NuGetSearch.Android
 		/// <summary>
 		/// Adds menu items to the menu for this activity
 		/// </summary>
-		/// <returns></returns>
+        /// <returns>base OnCreateOptionsMenu return value</returns>
 		/// <param name="menu">The menu for this activity</param>
 		public override bool OnCreateOptionsMenu(IMenu menu)
 		{
@@ -42,7 +45,7 @@ namespace NuGetSearch.Android
 		/// <summary>
 		/// Handles menu item selection events
 		/// </summary>
-		/// <returns></returns>
+		/// <returns>base OnOptionsItemSelected return value</returns>
 		/// <param name="item">The selected menu item</param>
 		public override bool OnOptionsItemSelected(IMenuItem item)
 		{

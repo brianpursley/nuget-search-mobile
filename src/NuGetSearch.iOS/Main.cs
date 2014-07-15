@@ -6,6 +6,9 @@ using MonoTouch.UIKit;
 
 namespace NuGetSearch.IOS
 {
+    /// <summary>
+    /// The iOS Application
+    /// </summary>
 	public class Application
 	{
 		/// <summary>

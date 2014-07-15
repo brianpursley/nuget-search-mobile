@@ -35,15 +35,14 @@ namespace NuGetSearch.IOS
         private RowSelectedDelegate rowSelectedCallback;
         private RowChangedDelegate rowChangedCallback;
 
-        public delegate void RowSelectedDelegate(SearchResultItem item);
-        public delegate void RowChangedDelegate(NSIndexPath indexPath);
-
         /// <summary>
         /// Initializes a new instance of the <see cref="NuGetSearch.IOS.SearchResultTableViewSource"/> class.
         /// </summary>
         /// <param name="searchTerm">Search term.</param>
         /// <param name="orderBy">Order by.</param>
         /// <param name="includePrerelease">If set to <c>true</c> include prerelease.</param>
+        /// <param name="rowSelectedCallback">Method to be called when a row is selected</param>
+        /// <param name="rowChangedCallback">Method to be called when the content of a row has been changed</param>
         public SearchResultTableViewSource(
             string searchTerm, 
             string orderBy, 
@@ -63,6 +62,10 @@ namespace NuGetSearch.IOS
 
             this.LoadSearchResultItems(InitialBatchSize, null);
         }
+
+        public delegate void RowSelectedDelegate(SearchResultItem item);
+
+        public delegate void RowChangedDelegate(NSIndexPath indexPath);
 
         /// <summary>
         /// Gets the total count of results reported by the NuGet Gallery server.
@@ -88,6 +91,13 @@ namespace NuGetSearch.IOS
             }
         }
 
+        /// <summary>
+        /// Called to populate the header for the specified section.
+        /// </summary>
+        /// <see langword="null"></see>
+        /// <returns>The for header.</returns>
+        /// <param name="tableView">Table view.</param>
+        /// <param name="section">Section.</param>
         public override string TitleForHeader(UITableView tableView, int section)
         {
             return this.totalCount == 1 ?
@@ -95,19 +105,36 @@ namespace NuGetSearch.IOS
                 string.Format(Resources.GetString(Resource.String.result_count_format), this.totalCount);
         }
 
+        /// <summary>
+        /// Determines how many rows are in the specified section of the table
+        /// </summary>
+        /// <returns>The in section.</returns>
+        /// <param name="tableview">Tableview.</param>
+        /// <param name="section">Section.</param>
         public override int RowsInSection(UITableView tableview, int section)
         {
             return this.HasMore ? this.items.Count + 1 : this.totalCount;
         }
 
+        /// <summary>
+        /// Method called when a row is selected
+        /// </summary>
+        /// <param name="tableView">Table view.</param>
+        /// <param name="indexPath">Index path.</param>
         public override void RowSelected(UITableView tableView, NSIndexPath indexPath)
         {
-            if (rowSelectedCallback != null)
+            if (this.rowSelectedCallback != null)
             {
-                rowSelectedCallback(this.items[indexPath.Row]);
+                this.rowSelectedCallback(this.items[indexPath.Row]);
             }
         }
 
+        /// <summary>
+        /// Gets the table cell of the specified index
+        /// </summary>
+        /// <returns>The cell.</returns>
+        /// <param name="tableView">Table view.</param>
+        /// <param name="indexPath">Index path.</param>
         public override UITableViewCell GetCell(UITableView tableView, MonoTouch.Foundation.NSIndexPath indexPath)
         {
             var position = indexPath.Row;
@@ -122,8 +149,7 @@ namespace NuGetSearch.IOS
 
                 // Re-use the cell that was passed in the convertView argument, or create a new cell if it was null
                 UITableViewCell cell = tableView.DequeueReusableCell(LoadingMoreCellIdentifier)
-                   ?? new UITableViewCell(UITableViewCellStyle.Subtitle, LoadingMoreCellIdentifier) 
-                        { SelectionStyle = UITableViewCellSelectionStyle.None }; 
+                   ?? new UITableViewCell(UITableViewCellStyle.Subtitle, LoadingMoreCellIdentifier) { SelectionStyle = UITableViewCellSelectionStyle.None }; 
 
                 cell.TextLabel.Text = Resources.GetString(Resource.String.wait_loading_more);
 
@@ -155,6 +181,10 @@ namespace NuGetSearch.IOS
             }
         }
             
+        /// <summary>
+        /// Sets the size of the cell image view frame.
+        /// </summary>
+        /// <param name="cell">Cell.</param>
         private static void SetCellImageViewFrameSize(UITableViewCell cell)
         {
             var frame = cell.ImageView.Frame;
@@ -281,7 +311,6 @@ namespace NuGetSearch.IOS
             });
 
             // Tell the icon manager to make sure it has a bitmap for the icons, and if not, to start loading them
-
             IOSIconManager.Current.Load(
                 searchResult.Items.Select(x => x.IconUrl).Distinct(),
                 x => 
@@ -297,8 +326,6 @@ namespace NuGetSearch.IOS
                     }
                 }
             });
-
-
         }
     }
 }

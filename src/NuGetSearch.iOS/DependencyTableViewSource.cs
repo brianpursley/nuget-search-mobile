@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 using NuGetSearch.Common;
-using MonoTouch.Foundation;
 
 namespace NuGetSearch.IOS
 {
+    /// <summary>
+    /// Dependency table view source.
+    /// </summary>
     public class DependencyTableViewSource : UITableViewSource
     {
         private const string DependencyCellIdentifier = "1";
@@ -14,8 +17,11 @@ namespace NuGetSearch.IOS
 
         private RowSelectedDelegate rowSelectedCallback;
 
-        public delegate void RowSelectedDelegate(PackageDependency item);
-
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NuGetSearch.IOS.DependencyTableViewSource"/> class.
+        /// </summary>
+        /// <param name="items">Items.</param>
+        /// <param name="rowSelectedCallback">Row selected callback.</param>
         public DependencyTableViewSource(
             IList<PackageDependency> items,
             RowSelectedDelegate rowSelectedCallback)
@@ -25,26 +31,59 @@ namespace NuGetSearch.IOS
             this.rowSelectedCallback = rowSelectedCallback;
         }
 
+        public delegate void RowSelectedDelegate(PackageDependency item);
+
+        /// <summary>
+        /// Returns the number of rows in the specified table section
+        /// </summary>
+        /// <returns>The in section.</returns>
+        /// <param name="tableview">Tableview.</param>
+        /// <param name="section">Section.</param>
         public override int RowsInSection(UITableView tableview, int section)
         {
             return this.items.Count;
         }
 
+        /// <summary>
+        /// Gets the height for the specified row
+        /// </summary>
+        /// <returns>The height for row.</returns>
+        /// <param name="tableView">Table view.</param>
+        /// <param name="indexPath">Index path.</param>
         public override float GetHeightForRow(UITableView tableView, MonoTouch.Foundation.NSIndexPath indexPath)
         {
             return DependencyTableViewCell.RowHeight;
         }
 
+        /// <summary>
+        /// Gets the height for the header of the specified section
+        /// </summary>
+        /// <returns>The height for header.</returns>
+        /// <param name="tableView">Table view.</param>
+        /// <param name="section">Section.</param>
         public override float GetHeightForHeader(UITableView tableView, int section)
         {
             return DependencyTableViewHeader.RowHeight;
         }
 
+        /// <summary>
+        /// Returns a view object to display at the start of the given section.
+        /// </summary>
+        /// <paramref name="section"></paramref>
+        /// <returns>The view for header.</returns>
+        /// <param name="tableView">Table view.</param>
+        /// <param name="section">Section.</param>
         public override UIView GetViewForHeader(UITableView tableView, int section)
         {
             return new DependencyTableViewHeader(tableView.RectForHeaderInSection(section));
         }
 
+        /// <summary>
+        /// Gets the cell at the specified index
+        /// </summary>
+        /// <returns>The cell.</returns>
+        /// <param name="tableView">Table view.</param>
+        /// <param name="indexPath">Index path.</param>
         public override UITableViewCell GetCell(UITableView tableView, MonoTouch.Foundation.NSIndexPath indexPath)
         {
             var position = indexPath.Row;
@@ -61,13 +100,17 @@ namespace NuGetSearch.IOS
             return cell;
         }
 
+        /// <summary>
+        /// Method called when a row is selected
+        /// </summary>
+        /// <param name="tableView">Table view.</param>
+        /// <param name="indexPath">Index path.</param>
         public override void RowSelected(UITableView tableView, NSIndexPath indexPath)
         {
-            if (rowSelectedCallback != null)
+            if (this.rowSelectedCallback != null)
             {
-                rowSelectedCallback(this.items[indexPath.Row]);
+                this.rowSelectedCallback(this.items[indexPath.Row]);
             }
         }
-
     }
 }

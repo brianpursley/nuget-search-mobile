@@ -89,4 +89,7 @@
       <Link>Utility.cs</Link>
     </Compile>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Settings.StyleCop" />
+  </ItemGroup>
 </Project>

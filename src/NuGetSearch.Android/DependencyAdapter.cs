@@ -17,22 +17,23 @@ namespace NuGetSearch.Android
 		private IList<PackageDependency> dependencies;
         private RowSelectedDelegate rowSelectedCallback;
 
-        public delegate void RowSelectedDelegate(string packageTitle);
-
 		/// <summary>
 		/// Initializes a new instance of the <see cref="NuGetSearch.Android.DependencyAdapter"/> class.
 		/// </summary>
 		/// <param name="context">The parent context</param>
 		/// <param name="dependencies">The dependencies to include in this adapter</param>
+        /// <param name="rowSelectedCallback">Method to be called when a row is selected</param>
 		public DependencyAdapter(
 			Activity context, 
             IList<PackageDependency> dependencies,
             RowSelectedDelegate rowSelectedCallback) : base()
 		{
 			this.context = context;
-			this.dependencies = dependencies;
+            this.dependencies = dependencies;
             this.rowSelectedCallback = rowSelectedCallback;
 		}
+
+        public delegate void RowSelectedDelegate(string packageTitle);
 
 		/// <summary>
 		/// Gets the view type count.  For this adapter, it is just one.

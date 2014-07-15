@@ -137,6 +137,7 @@
   <ItemGroup>
     <None Include="Info.plist" />
     <None Include="Entitlements.plist" />
+    <None Include="Settings.StyleCop" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Main.cs" />
@@ -151,7 +152,9 @@
     <Compile Include="IOSIconManager.cs" />
     <Compile Include="Reachability.cs" />
     <Compile Include="Resources.cs" />
-    <Compile Include="Resource.cs" />
+    <Compile Include="Resource.cs">
+      <ExcludeFromStyleCop>true</ExcludeFromStyleCop>
+    </Compile>
     <Compile Include="Screens\PackageDetailScreen.cs" />
     <Compile Include="Screens\PackageDetailScreen.designer.cs">
       <DependentUpon>PackageDetailScreen.cs</DependentUpon>
