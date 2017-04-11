@@ -1,3 +1,5 @@
+*NOTE: This app is obsolete and no longer maintained.  The repo remains here for reference.*
+
 NuGet Search
 ============
 
